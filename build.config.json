@@ -1,0 +1,104 @@
+{
+    "blog": {
+      "title": "Ez blog 2.0",
+      "description": "A personal blog about technology, development, and other topics.",
+      "baseUrl": "https://yourusername.github.io/blog/",
+      "author": {
+        "name": "Your Name",
+        "email": "your.email@example.com",
+        "website": "https://yourwebsite.com/",
+        "github": "https://github.com/yourusername",
+        "linkedin": "https://linkedin.com/in/yourprofile",
+        "jobTitle": "Your Job Title"
+      }
+    },
+    "paths": {
+      "postsDb": "buildable-drafts/data/DB_posts.js",
+      "draftsDir": "buildable-drafts/",
+      "postsDir": "posts/",
+      "postTemplate": "post.html",
+      "indexTemplate": "index.html",
+      "outputDir": ".",
+      "assetsSourceDir": "buildable-drafts/assets/",
+      "assetsOutputDir": "assets/"
+    },
+    "meta": {
+      "charset": "UTF-8",
+      "viewport": "width=device-width, initial-scale=1.0",
+      "title": "Ez blog 2.0",
+      "description": "A personal blog about technology, development, and other topics.",
+      "author": "Your Name",
+      "keywords": "blog, technology, development, programming, web development",
+      "robots": "index, follow",
+      "language": "en",
+      "revisitAfter": "7 days",
+      "canonical": "https://yourusername.github.io/blog/",
+      "openGraph": {
+        "type": "website",
+        "url": "https://yourusername.github.io/blog/",
+        "title": "Ez blog 2.0",
+        "description": "A personal blog about technology, development, and other topics.",
+        "siteName": "Ez blog 2.0"
+      },
+      "twitter": {
+        "card": "summary_large_image",
+        "url": "https://yourusername.github.io/blog/",
+        "title": "Ez blog 2.0",
+        "description": "A personal blog about technology, development, and other topics."
+      },
+      "favicon": "./assets/images/icons/favicon.ico",
+      "logo": "./assets/images/icons/logo.png",
+      "logoLink": "index.html",
+      "blogLogoLink": "index.html",
+      "stylesheet": "./css/blog.css",
+      "headerStylesheet": "./css/header-logo.css",
+      "themeInitScript": "./js/theme-init.js",
+      "themeScript": "./js/theme.js",
+      "mainScript": "./js/main.js",
+      "simpleSliderScript": "./js/simple-slider.js"
+    },
+    "structuredData": {
+      "@context": "https://schema.org",
+      "@type": "Blog",
+      "name": "Ez blog 2.0",
+      "description": "A personal blog about technology, development, and other topics.",
+      "url": "https://yourusername.github.io/blog/",
+      "author": {
+        "@type": "Person",
+        "name": "Your Name",
+        "jobTitle": "Your Job Title",
+        "url": "https://yourwebsite.com/",
+        "sameAs": [
+          "https://github.com/yourusername",
+          "https://linkedin.com/in/yourprofile"
+        ]
+      },
+      "publisher": {
+        "@type": "Person",
+        "name": "Your Name"
+      },
+      "inLanguage": "en",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://yourusername.github.io/blog/"
+      }
+    },
+    "robots": {
+      "userAgent": "*",
+      "allow": ["/"],
+      "disallow": [],
+      "crawlDelay": null,
+      "sitemapUrl": "https://yourusername.github.io/blog/sitemap.xml"
+    },
+    "sitemap": {
+      "homepage": {
+        "changefreq": "weekly",
+        "priority": "1.0"
+      },
+      "posts": {
+        "changefreq": "monthly",
+        "priority": "0.8"
+      }
+    },
+    "ezBlogGitHubRepo": "https://github.com/yourusername/ez-blog-2"
+  }

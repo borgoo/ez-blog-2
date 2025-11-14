@@ -1,0 +1,42 @@
+/* Neurath Font Family */
+
+@font-face {
+    font-family: 'Neurath';
+    src: url('../assets/fonts/neurath-font-family/NeurathTest-Regular-BF63e5b9359109a.woff') format('woff'),
+         url('../assets/fonts/neurath-font-family/NeurathTest-Regular-BF63e5b932534b2.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Neurath';
+    src: url('../assets/fonts/neurath-font-family/NeurathTest-Light-BF63e5b93215937.woff') format('woff'),
+         url('../assets/fonts/neurath-font-family/NeurathTest-Light-BF63e5b9360625e.otf') format('opentype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Neurath';
+    src: url('../assets/fonts/neurath-font-family/NeurathTest-Medium-BF63e5b9321fb6e.woff') format('woff'),
+         url('../assets/fonts/neurath-font-family/NeurathTest-Medium-BF63e5b932264ba.otf') format('opentype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Neurath';
+    src: url('../assets/fonts/neurath-font-family/NeurathTest-SemiBold-BF63e5b93639f2d.woff') format('woff'),
+         url('../assets/fonts/neurath-font-family/NeurathTest-SemiBold-BF63e5b933b1505.otf') format('opentype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Neurath';
+    src: url('../assets/fonts/neurath-font-family/NeurathTest-Bold-BF63e5b93449ce6.woff') format('woff'),
+         url('../assets/fonts/neurath-font-family/NeurathTest-Bold-BF63e5b91488815.otf') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+}
+
