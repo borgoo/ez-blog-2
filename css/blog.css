@@ -16,6 +16,7 @@
   --text-muted: #757575;
   --border-color: #e0e0e0;
   --accent-color: #2c3e50;
+  --accent-color-light: #506d8b;
   --hover-bg: #f0f0f0;
   --shadow: rgba(0, 0, 0, 0.1);
 }
@@ -29,6 +30,7 @@
   --text-muted: #8a8891;
   --border-color: #3d3f42;
   --accent-color: #8b6fc7;
+  --accent-color-light: #ac8af6;
   --accent-secondary: #ff5ca0;
   --hover-bg: #313638;
   --shadow: rgba(106, 76, 147, 0.2);
@@ -44,6 +46,10 @@
   background: #6a4c93;
   color: white;
   text-shadow: none;
+}
+
+:target{
+  background-color: var(--accent-color-light);
 }
 
 body {
