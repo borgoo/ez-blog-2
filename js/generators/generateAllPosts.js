@@ -3,6 +3,8 @@ import { join, dirname } from 'path';
 import { loadPublishablePostsFromFile, loadPostsFromFile, getPublishablePosts } from '../utils/postsLoader.js';
 import { formatDate, getRelativeTime, escapeHtml } from '../utils/formatUtils.js';
 import { generateHeader, generateFooter } from '../utils/templateUtils.js';
+import { loadTimestamps, updatePostTimestamp, needsRegeneration } from '../utils/buildTimestamps.js';
+import { copyPostAssets } from './copyAssets.js';
 
 // ANSI color codes for console output
 const RED = '\x1b[31m';
@@ -11,9 +13,14 @@ const RESET = '\x1b[0m';
 /**
  * Generates static HTML pages for all publishable posts
  * @param {Object} config - The build configuration object
+ * @param {Object} options - Generation options
+ * @param {boolean} options.incremental - If true, only generate new/edited posts
+ * @param {string|null} options.forceId - If provided, force generation of this specific post ID
+ * @returns {Object} Object with generated count and whether any posts were generated
  */
-export function generateAllPosts(config) {
+export function generateAllPosts(config, options = {}) {
   const { paths } = config;
+  const { incremental = false, forceId = null } = options;
 
   // Load all posts to check for future-dated ones
   const allPosts = loadPostsFromFile(paths.postsDb, readFileSync);
@@ -49,18 +56,44 @@ export function generateAllPosts(config) {
     console.log(`✓ Created directory: ${postsOutputDir}`);
   }
 
+  // Load timestamps if doing incremental build
+  const timestamps = incremental ? loadTimestamps() : {};
+  let generatedCount = 0;
+  let needsRegen = false;
+
   posts.forEach(post => {
-    const html = generatePostHtml(post, config, paths.draftsDir);
-    const outputPath = join(postsOutputDir, `${post.id}.html`);
-    
-    const outputDir = dirname(outputPath);
-    if (!existsSync(outputDir)) {
-      mkdirSync(outputDir, { recursive: true });
+    const lastBuildTimestamp = timestamps[post.id] || null;
+    const shouldGenerate = forceId === post.id || 
+                          !incremental || 
+                          needsRegeneration(post, paths.draftsDir, lastBuildTimestamp);
+
+    if (shouldGenerate) {
+      // Copy assets for this post
+      const postsAssetsDir = join(paths.outputDir, paths.postsDir, 'assets');
+      copyPostAssets(post.id, paths.assetsSourceDir, postsAssetsDir);
+      
+      const html = generatePostHtml(post, config, paths.draftsDir);
+      const outputPath = join(postsOutputDir, `${post.id}.html`);
+      
+      const outputDir = dirname(outputPath);
+      if (!existsSync(outputDir)) {
+        mkdirSync(outputDir, { recursive: true });
+      }
+      
+      writeFileSync(outputPath, html, 'utf8');
+      updatePostTimestamp(post.id);
+      console.log(`✓ Generated ${outputPath}`);
+      generatedCount++;
+      needsRegen = true;
+    } else {
+      console.log(`❑ Skipped ${post.id} (no changes detected)`);
     }
-    
-    writeFileSync(outputPath, html, 'utf8');
-    console.log(`✓ Generated ${outputPath}`);
   });
+
+  return {
+    generatedCount,
+    needsRegen
+  };
 }
 
 function generatePostHtml(post, config, draftsDir) {

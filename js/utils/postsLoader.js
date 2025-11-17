@@ -3,7 +3,10 @@
  */
 
 /**
- * Filters and sorts posts to get only publishable ones (createdDate <= today)
+ * Filters and sorts posts to get only publishable ones
+ * A post is publishable if:
+ * - createdDate <= today
+ * - updatedDate (if exists) <= today (posts with future updatedDate are not shown in index)
  * Sorts by updatedDate (or createdDate if no updatedDate) in descending order (newest first)
  * 
  * @param {Array} posts - Array of post objects
@@ -18,9 +21,24 @@ export function getPublishablePosts(posts, referenceDate = null) {
     if (!post.createdDate) {
       return false; // Skip posts without createdDate
     }
+    
+    // Check createdDate
     const postDate = new Date(post.createdDate);
     postDate.setHours(0, 0, 0, 0);
-    return postDate <= today;
+    if (postDate > today) {
+      return false; // Post not yet published
+    }
+    
+    // Check updatedDate - if it exists and is in the future, don't show in index
+    if (post.updatedDate) {
+      const updatedDate = new Date(post.updatedDate);
+      updatedDate.setHours(0, 0, 0, 0);
+      if (updatedDate > today) {
+        return false; // Post with future updatedDate should not appear in index
+      }
+    }
+    
+    return true;
   });
 
   publishablePosts.sort((a, b) => {

@@ -21,6 +21,7 @@ This repository is an improved version of [ez-blog](https://github.com/borgoo/ez
 ## Features
 
 - **Fully Static**: Generates complete HTML pages with no server-side dependencies
+- **Incremental Build**: Only regenerates new or modified posts, making builds faster
 - **Simple Workflow**: Write posts in HTML, run build, deploy
 - **Customizable**: All configuration in `build.config.json`
 - **SEO Ready**: Auto-generates `robots.txt` and `sitemap.xml`
@@ -161,9 +162,13 @@ Edit `buildable-drafts/data/DB_posts.js` and add your post metadata:
 
 ### 3. Building Your Blog
 
-#### Full Build
+#### Incremental Build (Default)
 
-Generate all static pages (index, posts, robots.txt, sitemap.xml):
+By default, the build process is incremental and only regenerates posts that are:
+- **New**: No timestamp registered for the post ID
+- **Modified**: The `updatedDate` in `DB_posts.js` is newer than the last build timestamp, OR the content file was modified after the last build
+
+Generate static pages (only new/modified posts will be regenerated):
 
 ```bash
 node build.js
@@ -172,13 +177,14 @@ node build.js
 This will:
 - Copy assets from `buildable-drafts/assets/` to `posts/assets/` (maintaining the same folder structure)
 - Copy data from `buildable-drafts/data/` to `posts/data/`
-- Generate `index.html` with all posts
-- Generate individual post pages in `posts/`
-- Generate `robots.txt` and `sitemap.xml`
+- Generate only new or modified post pages in `posts/`
+- If any posts were generated, automatically regenerate `index.html`, `robots.txt`, and `sitemap.xml`
 
-#### Index Only
+**Note**: The build system tracks generation timestamps in `.build-timestamps.json` to determine which posts need regeneration.
 
-Generate only the `index.html` file (useful for quick testing):
+#### Force Index Generation
+
+Force generation of `index.html` even if no posts were modified:
 
 ```bash
 node build.js --index-only
@@ -186,12 +192,43 @@ node build.js --index-only
 node build.js -i
 ```
 
-#### Clean All Generated Files
+#### Force Generation of Specific Post
 
-Remove all generated files (index.html, posts/, robots.txt, sitemap.xml):
+Force regeneration of a specific post by ID (useful for testing or fixing issues):
 
 ```bash
-node build.clean-all.js
+node build.js --id post-id-here
+# or
+node build.js -id post-id-here
+```
+
+This will:
+- Regenerate the specified post
+- Automatically regenerate `index.html`, `robots.txt`, and `sitemap.xml`
+
+#### Remove Specific Post
+
+Remove a specific post and its associated files:
+
+```bash
+node build.js --remove post-id-here
+# or
+node build.js -r post-id-here
+```
+
+This will:
+- Remove the post HTML file (`posts/{post-id}.html`)
+- Remove the post's assets directory (`posts/assets/{post-id}/`)
+- Remove the post from build timestamps tracking
+
+#### Clean All Generated Files
+
+Remove all generated files (index.html, posts/, robots.txt, sitemap.xml, and build timestamps):
+
+```bash
+node build.js --remove-all
+# or
+node build.js -ra
 ```
 
 **Note**: This does NOT remove `./assets/` in the root directory, as it may contain other assets.
@@ -212,9 +249,9 @@ ez-blog-2.0/
 │   ├── data/
 │   │   └── DB_posts.js        # Copied metadata
 │   └── *.html                 # Generated post pages
-├── build.js                   # Main build script
-├── build.clean-all.js         # Cleanup script
+├── build.js                   # Main build script (with incremental build)
 ├── build.config.json          # Blog configuration
+├── .build-timestamps.json     # Build timestamps tracking (auto-generated)
 └── index.html                 # Generated homepage
 ```
 
@@ -270,10 +307,12 @@ This separation ensures that:
 ## Tips
 
 - Use future dates in `createdDate` to schedule posts (they won't appear until that date)
-- Update `updatedDate` when you modify a post to keep it at the top of the list
+- Update `updatedDate` in `DB_posts.js` when you modify a post to ensure it gets regenerated and stays at the top of the list
+- The incremental build system automatically detects file modifications, but updating `updatedDate` ensures proper tracking
 - Keep post IDs URL-friendly (lowercase, hyphens, no spaces)
 - Test your build locally before deploying
-- Use `build.clean-all.js` to start fresh if something goes wrong
+- Use `node build.js --remove-all` to start fresh if something goes wrong
+- The `.build-timestamps.json` file tracks when each post was last generated - you can safely delete it to force a full rebuild
 
 ## Requirements
 
