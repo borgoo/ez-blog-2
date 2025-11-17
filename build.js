@@ -20,9 +20,9 @@ if (indexOnly) {
   generateIndexHtml(config);
 } else {
   // Full build
-  // Copy assets to posts/assets/images (for post-specific assets)
-  // Structure: posts/assets/images/{id}/...
-  const postsAssetsDir = join(config.paths.outputDir, config.paths.postsDir, 'assets', 'images');
+  // Copy assets to posts/assets (maintaining the same structure as buildable-drafts)
+  // Structure: posts/assets/{id}/...
+  const postsAssetsDir = join(config.paths.outputDir, config.paths.postsDir, 'assets');
   copyAssets(config.paths.assetsSourceDir, postsAssetsDir);
   
   // Copy data directory to posts/data

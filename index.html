@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Primary Meta Tags -->
+  <title>Ez blog 2.0</title>
+
+  <meta name="title" content="Ez blog 2.0">
+  <meta name="description" content="A personal blog about technology, development, and other topics.">
+  <meta name="author" content="Your Name">
+  <meta name="keywords" content="blog, technology, development, programming, web development">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="en">
+  <meta name="revisit-after" content="7 days">
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://yourusername.github.io/blog/">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yourusername.github.io/blog/">
+  <meta property="og:title" content="Ez blog 2.0">
+  <meta property="og:description" content="A personal blog about technology, development, and other topics.">
+  <meta property="og:site_name" content="Ez blog 2.0">
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://yourusername.github.io/blog/">
+  <meta property="twitter:title" content="Ez blog 2.0">
+  <meta property="twitter:description" content="A personal blog about technology, development, and other topics.">
+  
+  <link rel="icon" type="image/x-icon" href="./assets/images/icons/favicon.ico">
+  
+  <link rel="stylesheet" href="./css/header-logo.css">
+  <link rel="stylesheet" href="./css/blog.css">
+  <script src="./js/theme-init.js"></script>
+
+</head>
+<body>
+
+  <header class="header">
+    <div class="header__content">
+      <div class="header__logo-container">
+        <a href="index.html" class="header__logo-icon-link">
+          <img src="./assets/images/icons/logo.png" alt="Your Name" class="header__logo-icon">
+        </a>
+        <div class="header__logo-wrapper-home">
+          <a href="index.html" class="header__logo header__logo--animated"><span class="first-letter">E</span>z &nbsp;<span class="first-letter">b</span>log</a>
+          <a href="index.html" class="header__title header__title--static">Blog</a>
+        </div>
+      </div>
+      <div class="header__controls">
+        <button id="theme-toggle" class="header__theme-toggle" aria-label="Toggle theme">🌙</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div id="posts-container" class="posts">
+      <div class="loading">Loading posts...</div>
+    </div>
+  </main>
+
+
+  <footer class="footer">
+    <a href="mailto:your.email@example.com">Mail me</a>
+    <a href="https://github.com/yourusername" target="_blank">Github</a>
+    <a href="https://linkedin.com/in/yourprofile" target="_blank">LinkedIn</a>
+    <a href="https://yourwebsite.com/" target="_blank">Website</a>
+    <a href="https://github.com/yourusername/ez-blog-2" target="_blank">&copy; 2025 EZ Blog 2.0.</a>
+  </footer>
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": "Ez blog 2.0",
+  "description": "A personal blog about technology, development, and other topics.",
+  "url": "https://yourusername.github.io/blog/",
+  "author": {
+    "@type": "Person",
+    "name": "Your Name",
+    "jobTitle": "Your Job Title",
+    "url": "https://yourwebsite.com/",
+    "sameAs": [
+      "https://github.com/yourusername",
+      "https://linkedin.com/in/yourprofile"
+    ]
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "Your Name"
+  },
+  "inLanguage": "en",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://yourusername.github.io/blog/"
+  }
+}
+  </script>
+
+  <script src="./js/theme.js"></script>
+  <script type="module" src="./js/main.js"></script>
+</body>
+</html>

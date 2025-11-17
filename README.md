@@ -93,10 +93,10 @@ Create a new HTML file in the `buildable-drafts/` directory. Use a URL-friendly 
 If your post includes images:
 
 1. Create a folder in `buildable-drafts/assets/` with the same name as your post ID (e.g., `buildable-drafts/assets/my-awesome-post/`)
-2. Place your images in that folder
-3. Reference them in your HTML: `<img src="./assets/images/my-awesome-post/image.jpg" alt="Description" />`
+2. Place your images in that folder (you can organize them in subfolders like `images/` if needed)
+3. Reference them in your HTML: `<img src="./assets/my-awesome-post/image.jpg" alt="Description" />` or `<img src="./assets/my-awesome-post/images/image.jpg" alt="Description" />` if you use a subfolder
 
-**Note**: Images will be automatically copied to `posts/assets/images/{post-id}/` during the build process.
+**Note**: The entire folder structure from `buildable-drafts/assets/{post-id}/` will be copied to `posts/assets/{post-id}/` during the build process, maintaining the same structure.
 
 #### Step 2.1: Using Image Slider (Optional)
 
@@ -108,7 +108,7 @@ If you want to display multiple images in a slider format, you can use the built
 ```html
 <div class="simple-slider" data-simple-slider>
   <div data-simple-slider-slide>
-    <img src="./assets/images/my-awesome-post/image1.jpg" alt="Description of first image" />
+    <img src="./assets/my-awesome-post/images/image1.jpg" alt="Description of first image" />
     <ul>
       <li>List 1</li>
       <li>List 2</li>
@@ -116,10 +116,10 @@ If you want to display multiple images in a slider format, you can use the built
     </ul>
   </div>
   <div data-simple-slider-slide>
-    <img src="./assets/images/my-awesome-post/image2.jpg" alt="Description of second image" />
+    <img src="./assets/my-awesome-post/images/image2.jpg" alt="Description of second image" />
   </div>
   <div data-simple-slider-slide>
-    <img src="./assets/images/my-awesome-post/image3.jpg" alt="Description of third image" />
+    <img src="./assets/my-awesome-post/images/image3.jpg" alt="Description of third image" />
   </div>
 </div>
 ```
@@ -170,7 +170,7 @@ node build.js
 ```
 
 This will:
-- Copy assets from `buildable-drafts/assets/` to `posts/assets/images/`
+- Copy assets from `buildable-drafts/assets/` to `posts/assets/` (maintaining the same folder structure)
 - Copy data from `buildable-drafts/data/` to `posts/data/`
 - Generate `index.html` with all posts
 - Generate individual post pages in `posts/`
@@ -208,8 +208,7 @@ ez-blog-2.0/
 │   └── *.html                 # Post content files
 ├── posts/                     # Generated static pages (created by build)
 │   ├── assets/
-│   │   └── images/
-│   │       └── {post-id}/     # Copied images
+│   │   └── {post-id}/         # Copied images (same structure as buildable-drafts)
 │   ├── data/
 │   │   └── DB_posts.js        # Copied metadata
 │   └── *.html                 # Generated post pages
