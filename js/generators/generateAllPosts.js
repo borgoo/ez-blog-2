@@ -72,7 +72,11 @@ export function generateAllPosts(config, options = {}) {
       const postsAssetsDir = join(paths.outputDir, paths.postsDir, 'assets');
       copyPostAssets(post.id, paths.assetsSourceDir, postsAssetsDir);
       
-      const html = generatePostHtml(post, config, paths.draftsDir);
+      // Check if preview image exists in source (it will be copied with assets)
+      const previewImageSourcePath = join(paths.assetsSourceDir, post.id, 'preview.webp');
+      const hasPreviewImage = existsSync(previewImageSourcePath);
+      
+      const html = generatePostHtml(post, config, paths.draftsDir, paths, hasPreviewImage);
       const outputPath = join(postsOutputDir, `${post.id}.html`);
       
       const outputDir = dirname(outputPath);
@@ -96,7 +100,7 @@ export function generateAllPosts(config, options = {}) {
   };
 }
 
-function generatePostHtml(post, config, draftsDir) {
+function generatePostHtml(post, config, draftsDir, paths, hasPreviewImage = false) {
   
   const contentFilePath = join(draftsDir, post.contentFile);
   const postContent = readFileSync(contentFilePath, 'utf8');
@@ -106,6 +110,11 @@ function generatePostHtml(post, config, draftsDir) {
   const updatedDate = post.updatedDate ? formatDate(post.updatedDate) : createdDate;
   const updatedRelative = post.updatedDate ? getRelativeTime(post.updatedDate) : null;
   const showUpdated = post.updatedDate && post.createdDate !== post.updatedDate;
+  
+  // Generate preview image URL if it exists
+  const previewImageUrl = hasPreviewImage 
+    ? `${config.blog.baseUrl}posts/assets/${post.id}/preview.webp`
+    : null;
   
   const postHtml = `
     <header class="post__header">
@@ -155,6 +164,7 @@ function generatePostHtml(post, config, draftsDir) {
   <meta property="og:title" content="${escapeHtml(post.title)} - ${config.blog.title}">
   <meta property="og:description" content="${escapeHtml(post.abstract || post.subtitle)}">
   <meta property="og:site_name" content="${config.blog.title}">
+  ${previewImageUrl ? `<meta property="og:image" content="${previewImageUrl}">` : ''}
   <meta property="article:published_time" content="${post.createdDate}">
   ${post.updatedDate ? `<meta property="article:modified_time" content="${post.updatedDate}">` : ''}
   <meta property="article:author" content="${escapeHtml(post.author || config.blog.author.name)}">
@@ -164,6 +174,7 @@ function generatePostHtml(post, config, draftsDir) {
   <meta property="twitter:url" content="${config.blog.baseUrl}posts/${post.id}.html">
   <meta property="twitter:title" content="${escapeHtml(post.title)} - ${config.blog.title}">
   <meta property="twitter:description" content="${escapeHtml(post.abstract || post.subtitle)}">
+  ${previewImageUrl ? `<meta property="twitter:image" content="${previewImageUrl}">` : ''}
   
   <link rel="stylesheet" href="../${config.meta.headerStylesheet}">
   <link rel="stylesheet" href="../${config.meta.stylesheet}">

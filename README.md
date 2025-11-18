@@ -129,8 +129,28 @@ If you want to display multiple images in a slider format, you can use the built
 ##### Preview
 ![slider](./assets/images/previews/slider.png)
 
+#### Step 2.2: Add Social Media Preview Image (Optional)
 
+To customize how your post appears when shared on social networks (LinkedIn, X/Twitter, Facebook, etc.):
 
+1. Create a preview image in WebP format (recommended: 1200x630px for optimal display)
+2. Place it in your post's assets folder: `buildable-drafts/assets/{post-id}/preview.webp`
+3. The image will be automatically used for Open Graph and Twitter/X Cards
+
+**Example structure:**
+```
+buildable-drafts/assets/my-awesome-post/
+├── preview.webp          # Social media preview image
+├── images/
+│   ├── image1.jpg
+│   └── image2.jpg
+└── other-file.jpg
+```
+
+**Note**: 
+- If `preview.webp` exists, it will be used as the preview image for all social networks
+- If `preview.webp` doesn't exist, no preview image meta tags will be added (fallback to default behavior)
+- The image will be automatically copied to `posts/assets/{post-id}/preview.webp` during build
 
 #### Step 3: Add Post Metadata
 
